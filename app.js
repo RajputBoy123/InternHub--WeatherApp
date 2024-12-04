@@ -15,16 +15,16 @@ let main = document.querySelector('main');
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();  
-    if(valueSearch.value != ''){
+    if (valueSearch.value != '') {
         searchWeather();
     }
 });
 
 const searchWeather = () => {
-    fetch(weatherUrl+'&q='+ valueSearch.value)
+    fetch(weatherUrl + '&q=' + valueSearch.value)
         .then(response => response.json())
         .then(data => {
-            if(data.cod == 200){
+            if (data.cod == 200) {
                 city.querySelector('figcaption').innerHTML = data.name;
                 city.querySelector('img').src = `https://flagsapi.com/${data.sys.country}/shiny/32.png`;
                 temperature.querySelector('img').src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png`;
@@ -43,23 +43,22 @@ const searchWeather = () => {
                 }, 1000);
             }
             valueSearch.value = '';
-        })
-}
+        });
+};
 
 const setBackground = (location) => {
     fetch(unsplashUrl + location + ' city skyline' + '&client_id=' + unsplashAccessKey)
         .then(response => response.json())
         .then(data => {
-            if(data.results && data.results.length > 0){
+            if (data.results && data.results.length > 0) {
                 document.body.style.backgroundImage = `url(${data.results[0].urls.regular})`;
             }
         });
-}
+};
 
-
-// search Default
+// Search Default
 const initApp = () => {
-    valueSearch.value = 'Washington';
+    valueSearch.value = 'New Delhi';
     searchWeather();
-}
+};
 initApp();
